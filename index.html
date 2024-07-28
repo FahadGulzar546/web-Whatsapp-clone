@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="pngwing.com (1).png" />
+    <title>Whatsapp</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <style>
+        body {
+            background-color: #deeedb;
+            overflow: hidden;
+        }
+
+        #logo {
+            height: 40px;
+        }
+
+        #sign {
+            color: rgb(233, 242, 233);
+            text-decoration: dotted;
+            font-size: 30px;
+            font-weight: 700;
+            display: inline;
+            position: relative;
+            bottom: 7px;
+          
+
+        }
+
+        #header {
+            background-color: rgb(11, 11, 255);
+            height: 45px;
+            border-radius: 10px;
+            box-shadow: 1px 1px 1000px rgba(245, 234, 13, 0.989);
+        }
+
+        #menber {
+            height: 600px;
+            width: 200px;
+            background-color: #fff;
+        }
+
+        #chats {
+            height: 410px;
+            width: 1000px;
+            background-color: #efefef;
+           
+            background-size:100%;
+            background-repeat: no-repeat;
+            display: block;
+            margin-left: 110px;
+            border-radius: 30px;
+            border: 1px dotted black;
+            overflow-y: auto;
+            margin-top: 20px;
+            box-shadow:0px 0px 30px rgb(229, 233, 224);
+        }
+
+        .n,
+        .y {
+            width: 200px;
+            background-color: #b6c9ac;
+            padding: 10px;
+            margin: 20px;
+            border-radius: 10px;
+            border: 0.5px solid black;
+
+        }
+
+        .n {
+            height: 10px;
+            clear: both;
+        }
+
+        .y {
+            height: 10px;
+            float: right;
+            clear: both;
+        }
+
+        #input {
+            height: 60px;
+            width: 700px;
+            display: block;
+            margin: auto;
+            margin-top: 20px;
+            border-radius: 20px;
+            font-size: 30px;
+            font-weight: 700;
+            font-family: "Sofia", sans-serif;
+            background-color: #d6d4d4;
+            outline: none;
+            border: 0.7px black solid;
+            box-shadow: 0px 0px 10px rgba(125, 125, 125, 0.989);
+        }
+
+        #btn {
+            height: 50px;
+            width: 150px;
+            background-color: #f11b1b;
+            color: aliceblue;
+            border-radius: 30px;
+            margin-left: 950px;
+            position: relative;
+            bottom: 55px;
+            cursor: pointer;
+            border: 3px rgb(254, 251, 251) solid;
+            box-shadow: 1px 1px 10px rgba(5, 170, 253, 0.989);
+        }
+
+        #b {
+            margin-right: 100px;
+        }
+
+        .color {
+            background-color: #fff;
+        }
+        #ham{
+            float: right;
+            font-size: 32px;
+            position: relative;
+            right: 20px;
+            cursor: pointer;
+            color: #fff;
+            
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.4/socket.io.js"></script>
+</head>
+
+<body onload="load()">
+    <div id="conatiner">
+        <section id="header">
+            <nav id="nav">
+                <a href="#" id="sign"> Whatsapp</a>
+                <span id="ham">&#9776;</span>
+            </nav>
+        </section>
+        <section id="member">
+
+        </section>
+        <section id="chats">
+           
+        </section>
+        <section id="type">
+            <div id="b">
+                <input type="text" id="input">
+                 <button id="btn" onclick="clik()">Send</button>
+            </div>
+        </section>
+    </div>
+</body>
+<script>
+
+    let socket = io();
+
+    let name= prompt('enter your name');
+   
+    
+
+    socket.emit('name', name);
+  
+    socket.on('sname', (nam) => {
+        let chat = document.getElementById('chats');
+        let div = document.createElement('div');
+        chat.appendChild(div);
+        div.classList.add('y');
+        div.classList.add('color');
+        div.innerHTML = nam + " joined";
+
+    })
+    function clik() {
+        socket.emit('message', input.value);
+        let chat = document.getElementById('chats');
+        let div = document.createElement('div');
+        chat.appendChild(div);
+        div.classList.add('y');
+        div.innerHTML = input.value;
+        input.value = '';
+
+    }
+    socket.on('smessage', (messag) => {
+        let chat = document.getElementById('chats');
+        let inp = document.createElement('div');
+        chat.appendChild(inp);
+        inp.classList.add('n');
+       
+        inp.innerHTML = messag.n+":"+ messag.m;
+    })
+</script>
+
+</html>
